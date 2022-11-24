@@ -89,6 +89,16 @@
     - 모델이 예측한 결과와 실측 Box가 얼마나 정확하게 겹치는가를 나타내는 지표
     > 1에 가까울수록 object를 잘 Detect함
 
-    
+<br/>
+
+### NMS (Non Max Suppression)
+- Object Detection 알고리즘은 Object가 있을 만한 위치에 많은 Detection을 수행하는 경향이 강함
+- NMS는 Detected 된 Object의 Bounding box중에 **비슷한 위치에 있는 box를 제거하고 가장 적합한 box를 선택**하는 기법
 
 
+**NMS 수행 로직**
+1. Detected 된 bounding box 별로 특정 Confidence threshold 이하 bounding box는 먼저 제거 
+> Confidence score 가 낮다는건 있을 만한 위치가 아니라는 것
+
+2. 가장 높은 Confidence score를 가진 box 순으로 내림차순으로 정렬하고 아래 로직을 모든 box에 순차적으로 적용
+> 가장 높은 신뢰점수를 갖는 box와 많이 겹치면 가장 높은거 뺴고 다제거
