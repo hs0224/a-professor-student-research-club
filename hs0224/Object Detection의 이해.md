@@ -10,8 +10,8 @@
 |`Segmentation`|Detection보다 더 발전된 형태로 Pixel 레벨 Detection 수행|
 
 - `Localization/Detection`
-    1. 해당 Object의 위치를 Bounding box로 찾고
-    1. Bounding Box내의 오브젝트를 판별
+    - 해당 Object의 위치를 Bounding box로 찾고
+    - Bounding Box내의 오브젝트를 판별
 > `Bounding box regression`(box의 좌표값 예측) 문제와  
 > `Classification` (분류) 두개의 문제가 합쳐져 있음
 
@@ -56,8 +56,8 @@
 - 하나의 이미지에서 하나의 Object 찾기
 
 ### 구조
-1. 원본 이미지 -> Featrue Extrator(Backbone) -> Feature Map -> FC Layer(Dense) -> **Soft max Class**  
-1. Annotation 파일 (Bounding box에 대한 좌표정보가 있음) -> **Bounding Box Regression**
+- 원본 이미지 -> Featrue Extrator(Backbone) -> Feature Map -> FC Layer(Dense) -> **Soft max Class**  
+- Annotation 파일 (Bounding box에 대한 좌표정보가 있음) -> **Bounding Box Regression**
 > 여러 이미지와 Bounding box 좌표로 학습
 
 <br/>
@@ -74,11 +74,11 @@
 
 ## 이미지의 어느 위치에서 Object를 찾아야 하는가?
 - Sliding Window 방식 : **Obj가 있을만한 위치를 무작정 찾는 방법**
-    1. 다양한 형태의 Window를 각각 sliding 시키는 방식
-    2. Window Scale은 고정하고 scale을 변경한 여러 이미지를 사용 (이미지 사이즈를 변경하는 방식)
+    - 다양한 형태의 Window를 각각 sliding 시키는 방식
+    - Window Scale은 고정하고 scale을 변경한 여러 이미지를 사용 (이미지 사이즈를 변경하는 방식)
         - 이미지를 너무 줄이게되면 Window 안에 너무 많은 obj가 포함되서 Detect하기 어려워지는 문제가 생김
 - Region Proposal(영역 추정) 방식 : **Object가 있을만한 후보 영역을 찾는 방법**
-    1. 대표적으로 Selective Search가 있음
+    - 대표적으로 Selective Search가 있음
  
 
 <br/>
@@ -97,8 +97,8 @@
 
 
 **NMS 수행 로직**
-1. Detected 된 bounding box 별로 특정 Confidence threshold 이하 bounding box는 먼저 제거 
+- Detected 된 bounding box 별로 특정 Confidence threshold 이하 bounding box는 먼저 제거 
 > Confidence score 가 낮다는건 있을 만한 위치가 아니라는 것
 
-2. 가장 높은 Confidence score를 가진 box 순으로 내림차순으로 정렬하고 아래 로직을 모든 box에 순차적으로 적용
+- 가장 높은 Confidence score를 가진 box 순으로 내림차순으로 정렬하고 아래 로직을 모든 box에 순차적으로 적용
 > 가장 높은 신뢰점수를 갖는 box와 많이 겹치면 가장 높은거 뺴고 다제거
