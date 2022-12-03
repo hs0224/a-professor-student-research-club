@@ -1,6 +1,7 @@
 ## R-CNN (Regions with CNN)
 
 - Region Propsal 방식에 기반한 Object Detection
+- 딥러닝을 최초로 Object Detection에 도입
 
 <br/>
 
@@ -84,4 +85,35 @@
 - 기존에 SPP-Net 에서 사용했던 SPP Layer를 ROI Pooling Layer로 교체
 - 기존 RCNN, SPP-Net에서 사용되었던 SVM을 Softmax로 변환
 - Multi-task loss 함수로 Classification과 Regression을 함께 최적화 할 수 있게됨
+
+<br/>
+<br/>
+
+## Faster RCNN 
+- 비로소 Obj Detection 구성요소가 모두 딥러닝을 사용 (완전하게 딥러닝기반 학습)
+- Faster RCNN = **RPN**(Region Proposal Network) + Fast RCNN
+- Selective Search를 Region Proposal Network 구조로 변경
+    - GPU 사용으로 빠른 학습 Inference
+    - End to End Network 학습
+
+- Anchor Box : Object가 있는지 없는지의 후보 Box 선택하는 방식
+    - Anchor box는 총 9개로 구성 (3개의 서로 다른 크기, 3개의 서로다른 ratio로 구성)
+    - Anchor Box는 Feature map에서 매핑이 되는 것임
+    - 각각 grid cell별 전부다 Anchor Box를 구함
+        - Feature map size가 50x38이라면 총 grid locations는 1900개
+        - 1900개 point에 대해서 9개의 Anchor Box를 그리면 17100개
+        - 기존 Selective Search ROI는 2000개 Box에서 찾았다면 Anchor Box는 17100개에서 Obj가 있을만한 위치를 찾음
+
+- Positive Anchor Box, Negative Anchor box로 분류
+    - IOU가 가장 높은 Anchor는 Positive
+    - IOU가 0.7이상이면 Positive
+    - IOU가 0.3보다 낮으면 Negative
+    - IOU가 0.3 ~ 0.7 사이면 학습대상에서 제외
+
+<br/>
+
+- Achor box를 Reference로 해서 Bounding Box Regression 수행  
+    - 예측 bounding Box와 Positive anchor box와의 좌표 차이는 Ground Truth와 Positive anchor box와의 좌표 차이와 최대한 동일하게 될 수 있도록 regression학습
+
+
 
