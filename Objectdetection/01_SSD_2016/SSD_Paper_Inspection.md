@@ -33,8 +33,6 @@
 
 ## 1. 모델 구조 확인
 
-----
-
 ### [ 1 ] Fig 2. single shot detection 모델의 비교 SSD vs YOLO [5].
 
 ![Alt text](/Objectdetection/01_SSD_2016/rsc/image/model_structure.JPG "Model Structures")
@@ -72,8 +70,6 @@
 ----
 
 ## 2. 여타 figure들 분석
-
-----
 
 ### [1] Fig. 1. SSD framework
 
