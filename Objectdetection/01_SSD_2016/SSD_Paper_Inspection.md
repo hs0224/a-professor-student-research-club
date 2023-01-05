@@ -35,7 +35,7 @@
 
 ----
 
-## [ 1 ] Fig 2. single shot detection 모델의 비교 SSD vs YOLO [5].
+### [ 1 ] Fig 2. single shot detection 모델의 비교 SSD vs YOLO [5].
 
 ![Alt text](/Objectdetection/01_SSD_2016/rsc/image/model_structure.JPG "Model Structures")
 
