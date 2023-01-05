@@ -6,7 +6,7 @@
 
 ## 0. 개요
 
-### [ 1 ] 논문 분석 규칙
+## [ 1 ] 논문 분석 규칙
 
 * (1) figure의 경우   
     + (1-1) '시각적 자료'를 분석한다.   
@@ -21,7 +21,7 @@
     + (3-3) 후에 이해가 가는 경우,   
     내용을 추가하거나 새로운 문서에서 보충 설명을 추가한다.   
 
-### [ 2 ] 논문 분석 순서
+## [ 2 ] 논문 분석 순서
 
 * (1) 논문의 figure를 분석한다.   
     + (1-1) figure 중 '모델의 구조'를 분석한다.   
@@ -35,11 +35,11 @@
 
 ----
 
-### [ 1 ] Fig 2. single shot detection 모델의 비교 SSD vs YOLO [5].
+## [ 1 ] Fig 2. single shot detection 모델의 비교 SSD vs YOLO [5].
 
 ![Alt text](/Objectdetection/01_SSD_2016/rsc/image/model_structure.JPG "Model Structures")
 
-#### * 시각 자료 분석
+### * 시각 자료 분석
 
 * 좌측 기준으로 순서대로 진행해보면
     + (1) input 이미지   
@@ -51,7 +51,7 @@
 
     + (?) 클래스 당 8732 오브젝트 탐지 - 8732 per Class, Non-Maximum Suppression
 
-#### * 설명 분석
+### * 설명 분석
 
 > Fig. 2. A comparison between two single shot detection models: SSD and YOLO [5]. Our SSD model adds several feature layers to the end of a base network, which predict the offsets to default boxes of different scales and aspect ratios and their associated confidences. SSD with a 300 × 300 input size significantly outperforms its 448 × 448 YOLO counterpart in accuracy on VOC2007 test while also improving the speed.
 
@@ -64,7 +64,7 @@
 
     + (?) 기본 박스들-default boxes, 위치 좌표-offset
 
-#### * 종합 분석
+### * 종합 분석
 
 > * SSD는 '기본 네트워크'에 여러 특성 게층들을 추가했다고 언급되었다. 모델 시각 자료를 확인해 보았을 때, 'VGG-16'을 사용했음을 알 수 있는데, 이 VGG-16 모델이 기본 네트워크가 되는 것으로 추정된다.
 > * 또한, VGG-16 모델 이후에 여러 '합성곱 계층들'이 보이는데, 이 계층들이 설명 분석에서 언급된 '특성 계층들'로 '기본 박스들'에 대한 위치 좌표를 예측하는 역할을 하는 것으로 추정된다.
@@ -79,7 +79,7 @@
 
 ![Alt text](/Objectdetection/01_SSD_2016/rsc/image/Fig01_SSD_framework.JPG "Fig. 1. SSD framework")
 
-#### * 시각 자료 분석
+### * 시각 자료 분석
 
 * (a) Image with GT boxes
     + (1) 이미지에 개와 고양이가 나타나 있다.
@@ -101,7 +101,7 @@
         loc : delta(cx, cy, w, h)
         conf: (c1, c2, ..., cp)
 
-#### * 설명 분석
+### * 설명 분석
 
 > (a) SSD only needs an input image and ground truth boxes for each object during training. In a convolutional fashion, we evaluate a small set (e.g. 4) of default boxes of different aspect ratios at each location in several feature maps with different scales (e.g. 8×8 and 4×4 in (b) and (c)). For each default box, we predict both the shape offsets and the confidences for all object categories ((c1, c2, ··· , cp)). At training time, we first match these default boxes to the ground truth boxes. For example, we have matched two default boxes with the cat and one with the dog, which are treated as positives and the rest as negatives. The model loss is a weighted sum between localization loss (e.g. Smooth L1 [6]) and confidence loss (e.g. Softmax).
 
@@ -118,7 +118,7 @@
     + (예시) 두 개의 박스 뭉치들을 하나는 고양이, 하나는 개에 맞춰보았다. '대응'되는 부분은 '양수', 대응되지 '않는' 부분은 '음수'로 취급한다.
     + (5) 모델의 손실은 '위치 손실(예, Smooth L1 [6])'과 '활성 손실(예, Softmax)' 간의 합이다.
 
-#### * 종합 분석
+### * 종합 분석
 
 > * SSD는 학습을 위해 2가지 요소가 필요하다. 하나는 '이미지'이고, 다른 하나는 이미지 내에 탐지를 목표로 하는 객체들을 둘러싸는 '박스'들이다. 이 박스들은 '실측 박스'라고 부르기로 했다.
 > * 객체를 탐지하는 데에 또 다른 박스 종류가 필요하다. 이는 '박스 뭉치'로 여러개의 다양한 크기, 종횡비, 활성값들을 가지는 기본(점선) 박스들로 이루어져 있다.
