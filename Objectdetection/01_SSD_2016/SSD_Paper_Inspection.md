@@ -130,11 +130,51 @@
 ### * 시각적 자료 분석
 
 * 표를 읽어보면
-    + (1) Method, data, mAP, aero, bike, bird, boat, ... 등의 데이터들이 기재되어 있음을 알 수 있다.
+    + (1) Method, data, mAP, aero, bike, bird, boat, ... 등 20여 종의 데이터들이 기재되어 있음을 알 수 있다.
     + (2) Method 열에는 Fast [6], Faster [2], SSD300, SSD512 등 모델 명 등이 기재 되어 있다.
         - (2-1) 대괄호('[]')는 참고문헌 번호이다.
     + (3) data 열에는 07, 07+12, 07+12+COCO 등 조금 이해하기 난해한 데이터가 기재되어있다.
         - (3-1) 데이터셋 번호, 혹은 테스트 년도가 기재되어있는 것으로 추정된다.
-    + (4) mAP 열에는 십의 자리 실수들이 기재되어있다.
+    + (4) mAP 열(?)에는 십의 자리 실수들이 기재되어있다.
         - (4-1) 정확도 혹은 평가 점수 등으로 추정된다.
     + (5) aero, bike, bird, boat, ...등의 열은 데이터 범주에 대한 열로 기재된 데이터들은 해당 범주에 대한 정확도로 추정된다.
+
+    + (?) mAP(mean Average Precision): 
+        - Precision: 정확도; 검출 결과들 중 옳게 검출한 비율
+            - 식: Precision = TP / (TP+FP) = TP / All Detections
+            - TP(True-Positive), FP(False-Positive), 반대 개념들도 존재하며, 베이지안 추론을 검색해보기 바란다.
+        - Recall: 검출율(재현율); 실제 옳게 검출된 결과들 중 옳게 예측한 비율
+            - 식: Recall = TP / (TP + FN) = TP / All Ground truths
+        - Precision과 Recall의 관계:
+            - 일반적으로 반비례한다.
+            - 'Precision-Recall 곡선'으로 한눈에 확인한다.
+            - 어떤 알고리즘의 성능을 전반적으로 파악하기에는 좋으나, 다른 알고리즘과 정량적으로 비교하기에는 불편한 점이 많다.
+        - AP(Average Precision): 인식 알고리즘의 성능을 하나의 값으로 표현한 것
+            - 'Precision-Recall 그래프'의 아래쪽 면적(적분)으로 계산된다.
+            - 컴퓨터비전 분야의 물체인식 알고리즘 성능 대부분이 AP로 평가된다.
+        - mAP(mean Average Precision):
+            - 물체의 클래스가 여러 개인 경우, 각 클래스당 AP를 구한 후, 총합하여 클래스의 개수로 나눈 값이다.
+        - (참고) https://ctkim.tistory.com/79
+
+### * 설명 분석
+
+> Both Fast and Faster RCNN use input images whose minimum dimension is 600. The two SSD models have exactly the same settings except that they have different input sizes (300 × 300 vs. 512 × 512). It is obvious that larger input size leads to better results, and more data always helps. Data: “07”: VOC2007 trainval, “07+12”: union of VOC2007 and VOC2012 trainval. “07+12+COCO”: first train on COCO trainval35k then finetune on 07+12.
+
+* 'Table 1. PASCAL VOC2007 test detection results.'에 대한 설명으로
+    + (1) Fast R-CNN 과 Faster R-CNN 둘 다 최소 600 치수(?)의 input이미지들을 사용한다.(이미지 사이즈가 600 x 600 으로 추정된다.)
+    + (2) 2개의 SSD 모델은 input 사이즈들을 제외하고 정확히 같은 세팅값으로 설정되어있다.
+        - (예) SSD300 = 300 x 300 input 이미지를 사용한다.
+    + (3) Data 열의
+        - (3-1) "07"은 "VOC2007 trainval 데이터 셋"을 의미한다.
+        - (3-2) "07 + 12"는 "VOC2007과 VOC2012 통합 trainval 데이터셋"을 의미한다.
+        - (3-3) "07 + 12 + COCO"는 "먼저 COCO trainval135k 데이터셋으로 학습을 진행한 후 '07 + 12'(3-2)로 fine_tune(미세 조정)을 진행한 것이다.
+        - (참고) https://rain-bow.tistory.com/entry/Object-Detection-Object-Detection-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC-Implementation 
+    + (4) input 크기가 클수록 더 좋은 결과를 내는 것, 그리고 데이터가 더 많을 수록 항상 도움이 된다는 것이 명백해졌다.
+
+    + (?) 치수-dimension
+
+### * 종합 분석
+
+> * 해당 표는 SSD의 훈련 성능에 대한 표이다. 그리고 Fast R-CNN, Faster R-CNN과 비교했을 때, 더 좋은 성능을 내는 것을 확인할 수 있다.
+> * SSD-300과 SSD-512를 data: 07 별로 비교했을 때, SSD-300의 mAP는 68.0, SSD-512의 mAP는 71.6 이고, data: 07+12 별로 비교했을 때, SSD-300의 mAP는 74.1, SSD-512의 mAP는 76.8 등 input 이미지의 크기가 클수록 더 좋은 결과를 도출해냄을 알 수 있다.
+> * 표 전반적으로 어떤 모델이든 상관없이 살펴 보았을 때, data: 07과 data: 07+12를 비교해보면, mAP의 값들이 07+12 일 경우가 더 높음을 알 수 있다. 즉, input 데이터의 개수가 많을 수록 성능이 향상됨을 알 수 있다.
