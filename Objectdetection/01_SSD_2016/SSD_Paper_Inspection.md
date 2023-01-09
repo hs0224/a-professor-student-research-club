@@ -179,13 +179,13 @@
 > * SSD-300과 SSD-512를 data: 07 별로 비교했을 때, SSD-300의 mAP는 68.0, SSD-512의 mAP는 71.6 이고, data: 07+12 별로 비교했을 때, SSD-300의 mAP는 74.1, SSD-512의 mAP는 76.8 등 input 이미지의 크기가 클수록 더 좋은 결과를 도출해냄을 알 수 있다.
 > * 표 전반적으로 어떤 모델이든 상관없이 살펴 보았을 때, data: 07과 data: 07+12를 비교해보면, mAP의 값들이 07+12 일 경우가 더 높음을 알 수 있다. 즉, input 데이터의 개수가 많을 수록 성능이 향상됨을 알 수 있다.
 
-### [ 3 ] Fig. 3. Visualization of performance for SSD 512 on animals, vehicles, and furniture from VOC2007 test using[19]
+### [ 3 ] Fig. 3. Visualization of performance for SSD 512 on animals, vehicles, and furniture from VOC2007 test using [19]
 
 ![Alt text](/Objectdetection/01_SSD_2016/rsc/image/Fig03_Visual_performance.JPG "Fig. 3. Visualization of performance for SSD 512 on animals, vehicles, and furniture from VOC2007 test using")
 
 ### * 시각 자료 분석
 
-* VOC2007 테스트에서 사용된 SSD 512 모델의 성능 도표들로서
+* [19] 참고 문헌을 이용한 VOC2007 테스트에서 사용된 SSD 512 모델의 성능 도표들로서
     + (1) animals, vehicles, furniture 범주들에 대한 성능 도표로 확인된다.
     + (2) 성능 도표들 중 첫번 째 행을 분석해 보았을 때,
         - (2-1) 도표의 x축은 '총 인식된 object들의 수(?)'를 나타내는 것으로 추정할 수 있다. '(x 357)', '(x 415)' 등으로 적힌 것으로 보아 357개, 415개의 객체들이 인식된 것으로 보인다.
@@ -201,7 +201,9 @@
 
 ### * 설명 분석
 
-* VOC2007 테스트에서 사용된 SSD 512 모델의 성능 도표들에 대한 설명으로
+> The top row shows the cumulative fraction of detections that are correct (Cor) or false positive due to poor localization (Loc), confusion with similar categories (Sim), with others (Oth), or with background (BG). The bottom row shows the distribution of top-ranked false positive types.
+
+* [19] 참고 문헌을 이용한 VOC2007 테스트에서 사용된 SSD 512 모델의 성능 도표들에 대한 설명으로
     + (1) 첫 행은 인식들의 여러 부분들을 통합해 나타낸다.
         - (1-1) Cor: 올바른 인식
         - (1-2) Loc: 약한(박한) 지역화로 인한 FP(?)
@@ -221,3 +223,35 @@
 > * furniture 열의 마지막 행 도표를 보았을 때, 각 유형별 범주들이 비슷한 면적을 가지는 것을 보인다. 어쩌면, FP의 정도가 가장 골고루 나타나는 것으로 보인다.
 > * 세 열을 좌측부터 순서대로 보았을 때, 총 인식 수를 고려하고 보아도, furniture의 FP 면적이 제일 크게 나타나는 것을 볼 수 있다. 또한, 세 도표들 중 빨간 실선이 가장 완만하게 상승한다.
 > * 아직, 도표들에 대한 의미를 이해하기는 어려우므로 본문을 읽기 전까지는 어떻게 구성되어있는지만 기억하도록 하자.
+
+### [ 4 ] Fig. 4. Sensitivity and impact of different object characteristics on VOC2007 test set using [19]
+
+![Alt text](/Objectdetection/01_SSD_2016/rsc/image/Fig04_Sensitivity.JPG "Fig. 4. Sensitivity and impact of different object characteristics on VOC2007 test set using")
+
+### * 시각 자료 분석
+
+* [19]참고 문헌을 이용한 VOC2007 테스트에서 다른 객체 특성의 민감도와 영향에 대해 나타낸 도표들로
+    + (1) 좌측 열에는 각 범주별 BBox 영역의 설정 정도를 나타낸다.
+        - (1-1) y축이 0 부터 1까지 인것으로 보아, 정량적 비교를 위해 연산을 거친 수치들로 추측해 볼 수 있다.
+        - (1-2) x축은 XS, S, M, L, XL 순으로 크기 단위를 나타내고 있다. 아마도, SSD 구조 상 여러 단위, 종횡비, 크기의 박스들을 이용하기 때문으로 보인다.
+        - (1-3) 문제는, BBOX area가 '박스 뭉치의 크기'를 의미하는 것인지, '단일 기본 박스 크기'를 의미하는 것인지 아직 분간이 안된다는 것이다.
+    + (2) 우측 열에는 각 범주별 종횡비를 나타낸다.
+        - (2-1) y축이 좌측열과 똑같은 구성으로 확인된다.
+        - (2-2) x축은 XT, T, M, WX, W 순으로 종횡비 단위를 나타내고 있다.
+
+### * 설명 분석
+
+> The plot on the left shows the effects of BBox Area per category, and the right plot shows the effect of Aspect Ratio.
+
+* [19] 참고 문헌을 이용한 VOC2007 테스트에서 다른 객체 특성의 민감도와 영향에 대한 설명으로
+    + (1) 좌측 열의 도표는 범주 별 BBox 영역의 영향을 보여준다.
+    + (2) 우측열의 도표는 범주 별 종횡비의 영향을 보여준다.
+
+### * 종합 분석
+
+> * 좌측열은 범주별 BBox 영역 크기의 영향을, 우측열은 범주별 종횡비 단위의 영향을 보여준다.
+> * 대부분 영역 크기와 종횡비 단위가 커질수록 1에 가까워지는 것을 확인할 수 있다. 그리고, 실선의 기울기 또한 낮아지기 시작한다.
+>> * 이 기울기를 제목의 민감도로 추정했을 경우, 사이즈 혹은 종횡비가 커질 수록 민감도는 떨어진다고 해석해 볼 여지가 있다.
+> * 범주 chair의 경우 영역 크기 L, 종횡비 단위 WX부터 급격하게 하향하는 것을 볼 수있다. 심지어는 SSD512 종횡비에서 0.54로 시작하던 실선이 0.42까지 추락하는 것을 확인할 수 있다.
+>> * 민감도에 대한 추측에 따르면, 영역 크기 L, 종횡비 단위 M 혹은 WX부터 민감도가 급격히 줄어드는 것으로 확인된다. 개인적인 추측으로는 범주 table과 혼동하는 문제가 발생한 것이 아닌가 싶다.
+
