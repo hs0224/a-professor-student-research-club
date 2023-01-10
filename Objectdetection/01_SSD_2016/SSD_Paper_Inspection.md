@@ -165,7 +165,7 @@
     + (2) 2개의 SSD 모델은 input 사이즈들을 제외하고 정확히 같은 세팅값으로 설정되어있다.
         - (예) SSD300 = 300 x 300 input 이미지를 사용한다.
     + (3) Data 열의
-        - (3-1) "07"은 "VOC2007 trainval 데이터 셋"을 의미한다.
+        - (3-1) "07"은 "VOC2007 trainval 데이터셋"을 의미한다.
         - (3-2) "07 + 12"는 "VOC2007과 VOC2012 통합 trainval 데이터셋"을 의미한다.
         - (3-3) "07 + 12 + COCO"는 "먼저 COCO trainval135k 데이터셋으로 학습을 진행한 후 '07 + 12'(3-2)로 fine_tune(미세 조정)을 진행한 것이다.
         - (출처) https://rain-bow.tistory.com/entry/Object-Detection-Object-Detection-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC-Implementation 
@@ -342,3 +342,120 @@
 > * 마지막으로, 기반 네트워크에 포함된 conv4_3 체택 유무에 대해 5행과 마지막 행을 비교하는데, 당연히 conv4_3을 체택한 5행의 mAP가 높게 나온다. 두 행 모두 BBox를 사용하지 않은 경우의 mAP가 사용한 경우의 mAP를 앞지르는데, 하지만 5행은 0.2 mAP 정도만 차이가 생긴 반면, 6행은 2.4 mAP 정도로 매우 큰 차이가 발생한다.
 >> * 이에 대해, "완전히 이미지 학습을 끝내고 나서 박스 비교를 할 것"이냐, "이미지 학습 도중에도 초벌 구이마냥 박스 비교를 조금씩이라도 진행 할 것"이냐에 대한 실험으로 받아들였다.
 >> * 결론적으로, 기반 네트워크에 박스 비교를 하는 특성맵을 삽입하는 것이 더 좋은 SSD 모델을 만드는 것이라고 생각하고 있다.
+
+### [ 7 ] Table 4. PASCAL VOC2012 test detection results
+
+![Alt text](/Objectdetection/01_SSD_2016/rsc/image/Table04_PASCAL_VOC2012.JPG "Table 4. PASCAL VOC2012 test detection results")
+
+[ 2 ] Table 1. 은 분석 진행에 혼동 될 가능성이 있어 삽입하지 않았다.
+
+### * 시각 자료 분석
+
+* 해당 표는 PASCAL VOC2012 테스트 결과에 대한 표로 '[ 2 ] Table 1. PASCAL VOC2007 test detection results' 와 비슷한 구성을 가진다.
+    + (1) 차이점으로 + 가 아닌 ++ 로 기재되었다는 것이다. 따로 의미가 있는 것으로 추정된다.
+    + (2) [ 2 ]와 달리 sofa 외의 범주들에서 SSD-512 가 가장 높은 mAP를 나타내고 있다. 
+
+### * 설명 분석
+
+> Fast and Faster R-CNN use images with minimum dimension 600, while the image size for YOLO is 448 × 448. data: “07++12”: union of VOC2007 trainval and test and VOC2012 trainval. “07++12+COCO”: first train on COCO trainval35k then fine-tune on 07++12.
+
+* PASCAL VOC2012 테스트 결과 표에 대한 설명으로
+    + (1) Fast R-CNN, Faster R-CNN, YOLO 모두 [ 2 ]에서와 마찬가지인 전제를 가지고 있다.
+    + (2) data 열의 '07++12' 는 'VOC2007 trainval과 test' 데이터셋과 'VOC2012 trainval' 데이터셋을 통합한 것이다.
+    + (3) data 열의 '07++12+COCO' 는 먼저 COCO trainval135k 데이터셋으로 훈련한 후 '07++12' 데이터셋으로 미세 조정을 시행한 것이다.
+
+### * 종합 분석
+
+> * 결론적으로 '++'는 VOC2007의 trainval, test 데이터셋 모두와 VOC2012의 trainval 데이터셋을 통합한 데이터셋 사용을 의미한다.
+> * [ 2 ] 와 비슷한 분석을 도출하지만, sofa 범주에서만 SSD-300이 우세했다.
+
+### [ 8 ] Table 5. COCO test-dev2015 detection results
+
+![Alt text](/Objectdetection/01_SSD_2016/rsc/image/Table05_COCO.JPG "Table 5. COCO test-dev2015 detection results")
+
+### * 시각 자료 분석
+
+* COCO test-dev2015 결과에 대한 표로
+    + (1) Fast R-CNN, Faster R-CNN, ION[21], SSD300, SSD512 에 대한 학습 결과들이 정리되어있다.
+    + (2) Fast R-CNN, Faster R-CNN은 대부분 같은 데이터셋으로 학습한 내용이 정리되어있다.
+    + (3) ION(Inside-Outside_Net)은 2015년 12월 발표된 모델로 당장 분석할 수 없으므로 비교만 할 것이다.
+        - (참고) Inside-Outside Net: Detecting Objects in Context with Skip Pooling and Recurrent Neural Networks
+    + (4) SSD-300, SSD-512는 Fast, Faster R-CNN, ION과 다르게 trainval135k가 사용되었다.
+    + (5) mAP의 '0.5', '0.75', '0.5:0.95' 열의 의미를 가늠하기는 어렵지만, "[ 2 ] Table 1. 을 분석할 때 사용된 'Precision'과 'Recall'에 대한 표현"이거나 TP, FP 등등에 대한 표현일 가능성이 있다.
+
+### * 설명 분석
+
+* 설명 없음. 본문 분석에서 참고될 예정.
+
+### * 종합 분석
+
+> * 정확한 분석은 어렵다. 하지만, SSD-512 의 학습 결과가 가장 월등한 것만은 확실하다.
+> * Faster R-CNN [22] 행의 결과와 ION, SSD-300 행의 결과들을 비교해 보았을 때, Faster R-CNN의 수치가 나머지 둘을 압도한다. 이 점을 주의깊게 고려해 본문 분석에 참고해야 한다.
+> * ION과 SSD-300은 꽤 비슷한 결과를 도출한다. 이 점 또한 본문 분석에서 참고해야 한다.
+
+### [ 9 ] Table 6. Results on Pascal VOC2007 test
+
+![Alt text](/Objectdetection/01_SSD_2016/rsc/image/Table06_Result_VOC2007.JPG "Table 6. Results on Pascal VOC2007 test")
+
+### * 시각 자료 분석
+
+* Pascal VOC2007 테스트 결과에 대한 표로
+    + (1) Faster R-CNN, YOLO, Fast YOLO, SSD-300, SSD-512 순으로 정리된 표이다.
+        - (1-1) Faster R-CNN이 (VGG16), (ZF)로 나뉘는 것을 확인할 수 있다. VGG16 또한 모델(네트워크)이었으므로 ZF 또한 모델인 것으로 추정된다.
+    + (2) FPS 열이 존재한다. 이를 통해, 영상 데이터 학습에 대한 결과인 것으로 추정하고 있다.
+        - (2-1) 참고문헌 [2], [5] 등을 통해 실시간 detection에 대한 논문임을 확인할 수 있었다.
+        - (2-2) 정확한 의미는 아직 알 수 없지만, Faster R-CNN의 FPS는 매우 낮고, SSD-300, YOLO는 양호한 수준이며, 의외로 SSD-512의 FPS 수치가 낮은 편이다. 그리고 Fast YOLO는 위험할 수준으로 높다.
+    + (3) Test batch size 열이 존재한다. batch size는 한번에 학습할 데이터의 양인데, 문제는 데이터 양의 기준이 한 프레임인지, 서로 다른 영상인지는 구분이 가지 않는다.
+    + (4) # Boxes 열이 존재한다. 이는 인식된 객체 박스들의 개수를 의미한다.
+        - (4-1) SSD-512 를 통해 검출된 박스들의 개수가 다른 모델들에 비해 압도적으로 많은 것을 확인할 수 있다.
+
+### * 설명 분석
+
+> SSD300 is the only real-time detection method that can achieve above 70 % mAP. By using a larger input image, SSD512 outperforms all methods on accuracy while maintaining a close to real-time speed. Using a test batch size of 8 improves the speed further.
+
+* Pascal VOC2007 테스트 결과에 대한 표에 대한 설명으로
+    + (1) SSD-300은 실시간 detection에서 mAP 70% 이상을 달성할 수 있다.
+    + (2) 더 큰 크기의 input 이미지를 사용하는 SSD-512는 실시간 속도와 근접하게 유지하면서 정확도 면에서 모든 방법(모델)들을 능가한다.
+    + (3) 8 batch 크기를 사용함으로써 속도가 훨씬 개선되었다.
+
+### * 종합 분석
+
+> * SSD 또한 실시간 detection에 사용할 수 있음을 알게 되었다.
+> * SSD512의 FPS는 19, 22 등이고 SSD300, YOLO 등이 45에서 59의 값을 도출했는데도 설명에서는 SSD512가 실시간 속도와 근접하게 유지하고 있다고 묘사했다.
+>> * FPS 열의 의미가 '실시간과의 차이'를 나타내는 것이라면, 'delta FPS'라는 의미라면 FPS 열의 값이 낮을 수록 학습 속도가 빠른 것으로 생각할 수 있다.
+>> * 하지만, 형평성을 위해 'Test batch size' 열의 값이 1인 행들을 조사했을 때, 가장 낮은 FPS를 기록 값은 7로 Faster R-CNN(VGG16) 이었다. 반면, SSD-512의 FPS 값은 19 였다. 이는 Faster R-CNN(ZF)와 비슷한 수치이다. 어쩌면, FPS 값은 실제 FPS 수치이고, 실시간이라는 기준을 24프레임으로 잡았을 가능성이 있다.
+>>> * 영화, 애니메이션 등 영상 매체의 전통적인 프레임 수는 24 프레임으로 유명하다.
+> * Faster R-CNN(ZF) 에서 ZF 는 ZFNet 을 의미한다.
+>> * AlexNet에 이어 ILSVRC 2013에서 우승을 차지한 모델이다.
+>> * ZFNet의 핵심은 구조 그 자체보다 CNN을 가시화 하여, CNN의 중간과정들을 출력해 사람의 눈으로 보고 개선 방향을 파악할 방법을 만들어 냈다는 것에 있다.
+>> * (출처) https://m.blog.naver.com/laonple/221218707503
+> * SSD-300과 SSD-512의 Box 수는 각각 8732, 24564로 SSD-512 에서 검출된 박스 수가 SSD-300 에서 검출된 박스 수보다 3배 가량 높다.
+> * SSD-300, SSD-512의 batch size가 1이었을 때는 FPS가 각각 46, 19 였지만, Batch size를 8로 증가시키고나서 비교하니 FPS가 각각 59, 22로 확실하게 증가했다. 이로서 설명 분석에서 언급되었던 batch 크기와 속도에 대한 설명을 직접 확인해볼 수 있었다.
+
+### [ 10 ] Fig. 5. Detection examples on COCO test-dev with SSD512 model
+
+![Alt text](/Objectdetection/01_SSD_2016/rsc/image/Fig05_example_COCO.JPG "Fig. 5. Detection examples on COCO test-dev with SSD512 model")
+
+### * 시각 자료 분석
+
+* SSD-512 모델을 사용한 COCO test-dev 에 대한 detection 예시들로
+    + (1) 다양한 객체들이 박스쳐지는 것을 볼 수 있다.
+
+### * 설명 분석
+
+> We show detections with scores higher than 0.6. Each color corresponds to an object category.
+
+*SSD-512 모델을 사용한 COCO test-dev 에 대한 detection 예시들에 대한 설명으로
+    (1) 0.6 보다 더 큰 점수를 detection 한 것들을 보여주고 있다.
+    (2) 박스들 각각의 색상은 객체 범주에 대응한다.
+
+### * 종합 분석
+
+> * COCO test의 객체 범주가 몇개인지는 모르겠으나 [ 2 ]와 [ 7 ]의 표들을 고려해보았을 때 20개의 범주 + etc 로 정해져 있을 것으로 추정하고 있다.
+> * 말, 개, 의자, 탁자 등등 [ 2 ], [ 7 ] 표에 포함되어 있는 범주들도 확인된다.
+> * 설명 분석에서 0.6 보다 더큰 점수를 detection한 예시들이라고 언급되었다. 따라서, 60% 이상의 확신이 있는 객체들만 detection 했다는 것이다.
+
+다음은 본문 분석이다.
+
+----
+
