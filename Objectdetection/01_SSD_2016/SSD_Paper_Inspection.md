@@ -480,9 +480,9 @@
 ### * Figure 분석과 비교
 
 요약 분석과 비교했을 때
+* (참고 1) ![Alt text](/Objectdetection/01_SSD_2016/rsc/image/model_structure.JPG "Model Structures")
+* (참고 2) ![Alt text](/Objectdetection/01_SSD_2016/rsc/image/Fig01_SSD_framework.JPG "Fig. 1. SSD framework")
 * (1) 요약 분석 (2)와 (3)은 '1. 모델 구조 확인의 [ 1 ] Fig. 2.' 와 '2. 여타 Fig 분석의 [ 1 ] Fig. 1.' 과 대조가 가능하다.
-    + (참고 1) ![Alt text](/Objectdetection/01_SSD_2016/rsc/image/model_structure.JPG "Model Structures")
-    + (참고 2) ![Alt text](/Objectdetection/01_SSD_2016/rsc/image/Fig01_SSD_framework.JPG "Fig. 1. SSD framework")
     + (1-1) 요약 분석 (2)의 " BBox의 출력 공간을 특성 맵 위치별 크기와 다양한 종횡비의 박스 뭉치들로 세분화한다.'에서
         - (1-1-1) '특성 맵 위치별 크기'는 (참고 1)의 설명과 conv8_2, conv9_2, ... 등 기반 네트워크 뒤에 추가되는 특성 맵들과, (참고 2)의 설명과 (b) 8 x 8 feature map, (c) 4 x 4 feature 맵 등과 대조해 볼 수 있다.
         - (1-1-2) '다양한 종횡비의 박스 뭉치들'은 당장 (참고 2)의 (b)와 (c) 내의 박스 뭉치들의 크기가 서로 다른 것, 박스 뭉치를 구성하는 박스들의 종횡비가 서로 다른 것 등과 대조해 볼 수 있다.
